@@ -29,7 +29,19 @@ Decompress and load the file as a dataframe.
 ```{r}
 stormdata<-read.table("./data/repdata%2Fdata%2FStormData.csv.bz2",header=TRUE,sep=",")
 ```
-
+Taking a look at the structure of the dataframe.
+```{r}
+str(stormdata)
+```
+Most variables were loaded correctly, but some need to be reclassed as dates or factors.
+Using dplyr + mutate_each to reclass
+```{r}
+library("dplyr")
+library("lubridate")
+stormdata<-stormdata %>%
+  mutate_each(funs(factor),c(STATE__,COUNTY)) %>%
+  mutate_each(funs(mdy_hms),c(BGN_DATE,END_DATE))
+```
 
 #### Results
 
