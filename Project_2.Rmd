@@ -25,6 +25,11 @@ The events in the database start in the year 1950 and end in November 2011. In t
 
 #### Data Processing
 
+Decompress and load the file as a dataframe.
+```{r}
+stormdata<-read.table("./data/repdata%2Fdata%2FStormData.csv.bz2",header=TRUE,sep=",")
+```
+
 
 #### Results
 
