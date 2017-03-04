@@ -24,24 +24,41 @@ The data for this assignment come in the form of a comma-separated-value file co
 The events in the database start in the year 1950 and end in November 2011. In the earlier years of the database there are generally fewer events recorded, most likely due to a lack of good records. More recent years should be considered more complete.
 
 #### Data Processing
-
+##### Loading & Formatting the data
 Decompress and load the file as a dataframe.
 ```{r}
-stormdata<-read.table("./data/repdata%2Fdata%2FStormData.csv.bz2",header=TRUE,sep=",")
+data<-read.table("./data/repdata%2Fdata%2FStormData.csv.bz2",header=TRUE,sep=",")
 ```
 Taking a look at the structure of the dataframe.
 ```{r}
-str(stormdata)
+str(data)
 ```
-Most variables were loaded correctly, but some need to be reclassed as dates or factors.
-Using dplyr + mutate_each to reclass
+Selecting only the pertinent variables for this asignment: EVTYPE, FATALITIES, INJURIES, PROPDMG, PROPDMGEXP, CROPDMG, CROPDMGEXP, REFNUM. These are put into a new dataframe called stormdata.
 ```{r}
-library("dplyr")
-library("lubridate")
-stormdata<-stormdata %>%
-  mutate_each(funs(factor),c(STATE__,COUNTY)) %>%
-  mutate_each(funs(mdy_hms),c(BGN_DATE,END_DATE))
+library(dplyr)
+stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
 ```
+
+##### Questions
+1.  Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
+    The variables describing population health effects are FATALITIES and INJURIES. Using dplyr summarise, in order to summarize these variables by EVTYPE. These summaries are then saved in dataframes called sum_fatalities and sum_injuries. Renaming quantitative variables to Total_F and Total_I
+    ```{r}
+    library(dplyr)
+    sum_fatalities<-summarise(group_by(stormdata,EVTYPE),sum(FATALITIES))
+    sum_injuries<-summarise(group_by(stormdata,EVTYPE),sum(INJURIES))
+    names(sum_fatalities)[[2]]<-"Total_F"
+    names(sum_injuries)[[2]]<-"Total_I"
+    ```
+    Now filtering each dataframe for the top 10 largest number of fatalities & injuries.
+    Assigning these to new dataframes called fatalities_10 & injuries_10 and putting in descending order of totals.
+    ```{r}
+    library(dplyr)
+    fatalities_10<-top_n(sum_fatalities,10,Total_F)
+    injuries_10<-top_n(sum_injuries,10,Total_I)
+    fatalities_10<-arrange(fatalities_10,desc(Total_F))
+    injuries_10<-arrange(injuries_10,desc(Total_I))
+    ```
+2.  Across the United States, which types of events have the greatest economic consequences?
 
 #### Results
 
