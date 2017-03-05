@@ -44,7 +44,7 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
 
 ##### Questions
 1.  Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?
-    The variables describing population health effects are FATALITIES and INJURIES. Using dplyr summarise, in order to summarize these variables by EVTYPE. These summaries are then saved in dataframes called sum_fatalities and sum_injuries. Renaming quantitative variables to Total_F and Total_I
+    The variables describing population health effects are FATALITIES and INJURIES for each recorded weather event. Using dplyr summarise, in order to summarize these variables by EVTYPE. These summaries are then saved in dataframes called sum_fatalities and sum_injuries. Renaming quantitative variables to Total_F and Total_I
     ```{r}
     library(dplyr)
     sum_fatalities<-summarise(group_by(stormdata,EVTYPE),sum(FATALITIES))
