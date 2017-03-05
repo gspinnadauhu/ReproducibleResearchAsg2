@@ -103,12 +103,19 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
     ```{r}
     library(ggplot2)
     ggplot(data=fatalities_10,aes(x=reorder(EVTYPE,-Total_F),y=Total_F))+
+      theme_classic()+
       geom_col()+
-      labs(x="Event Type",y="Number of Fatalities",title="Fatalities: Top 10 Weather Events")
+      labs(x="Event Type",y="Number of Fatalities",title="Fatalities: Top 10 Weather Events")+
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
     ```
     Injuries:
     ```{r}
-    
+    library(ggplot2)
+    ggplot(data=injuries_10,aes(x=reorder(EVTYPE,-Total_I),y=Total_I))+
+      theme_classic()+
+      geom_col()+
+      labs(x="Event Type",y="Number of Injuries",title="Injuries: Top 10 Weather Events")+
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
     ```
 2.  Question 2 - Answer
 
