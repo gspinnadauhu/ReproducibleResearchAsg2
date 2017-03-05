@@ -97,6 +97,20 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       arrange(desc(TotalDMG))
     ```
 #### Results
+1.  Question 1 - Answer
+    Plotting top 10 Fatalities and Injuries by EVTYPE as bar charts using ggplot2.
+    Fatalities:
+    ```{r}
+    library(ggplot2)
+    ggplot(data=fatalities_10,aes(x=reorder(EVTYPE,-Total_F),y=Total_F))+
+      geom_col()+
+      labs(x="Event Type",y="Number of Fatalities",title="Fatalities: Top 10 Weather Events")
+    ```
+    Injuries:
+    ```{r}
+    
+    ```
+2.  Question 2 - Answer
 
 
 
