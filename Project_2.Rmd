@@ -118,6 +118,14 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       theme(axis.text.x = element_text(angle = 45, hjust = 1))
     ```
 2.  Question 2 - Answer
-
+    Plotting Top 10 Costs by EVTYPE as bar charts using ggplot2.
+    ```{r}
+    library(ggplot2)
+    ggplot(data=damage_10,aes(x=reorder(EVTYPE,-TotalDMG),y=TotalDMG))+
+      theme_classic()+
+      geom_col()+
+      labs(x="Event Type",y="Total Damage in $",title="Economic Damage: Top 10 Weather Events")+
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    ```
 
 
