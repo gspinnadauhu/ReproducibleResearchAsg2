@@ -5,29 +5,29 @@ date: "March 3, 2017"
 output: html_document
 ---
 
-#### Synopsis
+### Synopsis
 This report analyses the weather types which have the greatest effect on population health and on the economy.
 The data used for this analysis come from the NOAA Storm Database.
 We first isolate quantitative variables related to population health, economic impact along with the corresponding weather event type classifications. The data are then summarized by weather event type for total population health and total economic impact. Finally, we plot results for top 10 fatalities, injuries and damages.
 We found that tornados cause by far the highest amount of injuries and fatalities, while floods cause by far the highest amount in total damage.
 
-#### Introduction
+### Introduction
 Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
 
 This project involves exploring the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database. This database tracks characteristics of major storms and weather events in the United States, including when and where they occur, as well as estimates of any fatalities, injuries, and property damage.
 
-#### Data
+### Data
 The data for this assignment come in the form of a comma-separated-value file compressed via the bzip2 algorithm to reduce its size.
 
-#####Sources:
+##### Sources:
 [Storm Data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2)
 [Database Documentation](https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf)
 [FAQ](https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2FNCDC%20Storm%20Events-FAQ%20Page.pdf)
 
 The events in the database start in the year 1950 and end in November 2011. In the earlier years of the database there are generally fewer events recorded, most likely due to a lack of good records. More recent years should be considered more complete.
 
-#### Data Processing
-##### Loading & Formatting the data
+### Data Processing
+#### Loading & Formatting the data
 Decompress and load the file as a dataframe.
 ```{r}
 data<-read.table("./data/repdata%2Fdata%2FStormData.csv.bz2",header=TRUE,sep=",")
@@ -99,9 +99,11 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       top_n(10,TotalDMG) %>%
       arrange(desc(TotalDMG))
     ```
-#### Results
+
+### Results
 1.  Question 1 - Answer
     Plotting top 10 Fatalities and Injuries by EVTYPE as bar charts using ggplot2.
+    
     Fatalities:
     ```{r}
     library(ggplot2)
@@ -113,6 +115,7 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       theme(axis.text.x = element_text(angle = 45, hjust = 1))+
       scale_y_continuous(labels=comma)
     ```
+    
     Injuries:
     ```{r}
     library(ggplot2)
@@ -136,7 +139,8 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       theme(axis.text.x = element_text(angle = 45, hjust = 1))+
       scale_y_continuous(labels=comma)
     ```
-#### Conclusions
+
+### Conclusions
 
 Tornados, by far, cause the greatest number of fatalities and injuries across the United States, and therefor are the most harmful weather events with regards to population health.
 
