@@ -83,12 +83,18 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
         DMGVAL=PROPDMGVAL+CROPDMGVAL
         )
     ```
-    Next, creating a summary data frame for the total damage by EVTYPE, using dplyr-summarise
+    Next, creating a summary data frame for the total damage by EVTYPE, using dplyr-summarise.
     ```{r}
     library(dplyr)
-    damage_sum<-econimpact %>%
-      
-      
+    damage_sum<-summarise(group_by(econimpact,EVTYPE),sum(DMGVAL))
+    names(damage_sum)[[2]]<-"TotalDMG"
+    ```
+    Then, filtering for top 10 highest damage values and sorting in descending order, saving in damage_10 dataframe.
+    ```{r}
+    library(dplyr)
+    damage_10<-damage_sum %>%
+      top_n(10,TotalDMG) %>%
+      arrange(desc(TotalDMG))
     ```
 #### Results
 
