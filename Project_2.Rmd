@@ -102,21 +102,26 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
     Fatalities:
     ```{r}
     library(ggplot2)
+    library(scales)
     ggplot(data=fatalities_10,aes(x=reorder(EVTYPE,-Total_F),y=Total_F))+
       theme_classic()+
       geom_col()+
       labs(x="Event Type",y="Number of Fatalities",title="Fatalities: Top 10 Weather Events")+
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+      scale_y_continuous(labels=comma)
     ```
     Injuries:
     ```{r}
     library(ggplot2)
+    library(scales)
     ggplot(data=injuries_10,aes(x=reorder(EVTYPE,-Total_I),y=Total_I))+
       theme_classic()+
       geom_col()+
       labs(x="Event Type",y="Number of Injuries",title="Injuries: Top 10 Weather Events")+
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+      scale_y_continuous(labels=comma)
     ```
+
 2.  Question 2 - Answer
     Plotting Top 10 Costs by EVTYPE as bar charts using ggplot2.
     ```{r}
@@ -125,7 +130,12 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
       theme_classic()+
       geom_col()+
       labs(x="Event Type",y="Total Damage in $",title="Economic Damage: Top 10 Weather Events")+
-      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+      scale_y_continuous(labels=comma)
     ```
+#### Conclusions
 
+Tornados, by far, cause the greatest number of fatalities and injuries across the United States, and therefor are the most harmful weather events with regards to population health.
+
+Floods, by far, cause the highest amount of total damage across the United States, and therefor have greatest economic consequences.
 
