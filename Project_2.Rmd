@@ -59,7 +59,37 @@ stormdata<-select(data,EVTYPE,FATALITIES:CROPDMGEXP,REFNUM)
     injuries_10<-arrange(injuries_10,desc(Total_I))
     ```
 2.  Across the United States, which types of events have the greatest economic consequences?
-
+    Using property related damage (PROPDMG) and crop related damage (CROPDMG) variables to quantify economic consequences. These same variables with suffix "EXP" signify the magnitude of the number in PROPDMG and CROPDMG.
+    First, creating 2 new variables PROPDMGVAL and CROPDMGVAL, which will contain the actual dollar value of damage obtained by multiplying the numeric value in the DMG variable with the magnitude provided by the code in the EXP variable.
+    Then, adding PROPDMGVAL and CROPDMGVAL to obtain the total damage value (DMGVAL).
+    ```{r}
+    library(dplyr)
+    econimpact<-stormdata %>%
+      select(EVTYPE,PROPDMG,CROPDMG) %>%
+      rename(PROPDMGVAL=PROPDMG,CROPDMGVAL=CROPDMG) %>%
+      mutate(
+        PROPDMGVAL=PROPDMGVAL*ifelse(
+          stormdata$PROPDMGEXP %in% c("H","h"),100,ifelse(
+            stormdata$PROPDMGEXP %in% c("K","k"),1000,ifelse(
+              stormdata$PROPDMGEXP %in% c("M","m"),1000000,ifelse(
+                stormdata$PROPDMGEXP %in% c("B","b"),1000000000,1
+          )))),
+        CROPDMGVAL=CROPDMGVAL*ifelse(
+          stormdata$CROPDMGEXP %in% c("H","h"),100,ifelse(
+            stormdata$CROPDMGEXP %in% c("K","k"),1000,ifelse(
+              stormdata$CROPDMGEXP %in% c("M","m"),1000000,ifelse(
+                stormdata$CROPDMGEXP %in% c("B","b"),1000000000,1
+          )))),
+        DMGVAL=PROPDMGVAL+CROPDMGVAL
+        )
+    ```
+    Next, creating a summary data frame for the total damage by EVTYPE, using dplyr-summarise
+    ```{r}
+    library(dplyr)
+    damage_sum<-econimpact %>%
+      
+      
+    ```
 #### Results
 
 
